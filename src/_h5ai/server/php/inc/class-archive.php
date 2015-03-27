@@ -5,6 +5,7 @@ class Archive {
     private static $SEGMENT_SIZE = 16777216;  // 1024 * 1024 * 16 = 16MiB
     private static $TAR_PASSTHRU_CMD = "cd [ROOTDIR] && tar --no-recursion -c -- [DIRS] [FILES]";
     private static $ZIP_PASSTHRU_CMD = "cd [ROOTDIR] && zip - -- [FILES]";
+    private static $TXZ_PASSTHRU_CMD = "$TAR_PASSTHRU_CMD | xz";
 
     private $app, $dirs, $files;
 
@@ -37,6 +38,10 @@ class Archive {
         } else if ($type === "shell-tar") {
 
             return $this->shell_cmd(Archive::$TAR_PASSTHRU_CMD);
+
+        } else if ($type === "shell-txz") {
+
+            return $this->shell_cmd(Archive::$TGZ_PASSTHRU_CMD);
 
         } else if ($type === "shell-zip") {
 
